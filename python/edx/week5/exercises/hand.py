@@ -136,3 +136,11 @@ myHand = Hand(7)
 myHand.setDummyHand('aulqqik')
 myHand.update('qauail')
 print(myHand)
+
+# another test (from students)
+print('one more test....')
+
+myHand = Hand(7)
+myHand.setDummyHand('bokdeft')
+myHand.update('book')
+print(myHand)
