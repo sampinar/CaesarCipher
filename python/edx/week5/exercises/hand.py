@@ -87,7 +87,7 @@ class Hand(object):
         # Create a copy of self.hands dictionary
         tmp_hand = self.hand.copy()
         # does hand have all letters to make word?
-        suff_hand = all(i in ''.join(tmp_hand.keys()) for i in word)
+        suff_hand = all(i in ''.join(tmp_hand.keys()) and tmp_hand.get(i) >= word.count(i) for i in word)
         # update hand, removing letters that have value of '0'
         if suff_hand:
             self.hand = {key: val - word.count(key) for key, val in tmp_hand.items() if val - word.count(key) != 0}
@@ -131,6 +131,7 @@ myHand.update('chayote')
 print(myHand)
 
 # another test
+print('another test...')
 myHand = Hand(7)
 myHand.setDummyHand('aulqqik')
 myHand.update('qauail')
