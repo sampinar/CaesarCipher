@@ -25,11 +25,11 @@ class Coordinate(object):
         # Getter method for a Coordinate object's y coordinate
         return self.y
 
-    #def __str__(self):
-    #    return '<' + str(self.getX()) + ',' + str(self.getY()) + '>'
+    def __str__(self):
+        return '<' + str(self.getX()) + ',' + str(self.getY()) + '>'
 
     def __repr__(self):
-        return 'repr(' + str(self.x) + ')' + ' == ' + 'repr(' + str(self.y) + ')'
+        return str(self.__class__.__name__) + '(' + str(self.getX()) + ',' + str(self.getY()) + ')'
 
 sup = Coordinate(4, 4)
 print(sup.x)
@@ -38,3 +38,4 @@ print(sup.y)
 print(sup.x == sup.y)
 
 print(sup)
+print(repr(sup))
