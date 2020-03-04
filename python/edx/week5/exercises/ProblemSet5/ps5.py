@@ -208,8 +208,8 @@ class PlaintextMessage(Message):
         #pass #delete this line and replace with your code here
         self.shift = shift
         # Since shift is changing, let's also update our dict and apply cipher on our message
-        self.build_shift_dict(self.shift)
-        self.message_text_encrypted()
+        self.encrypting_dict =  self.build_shift_dict(self.shift)
+        self.apply_shift(self.shift)
 
 
 class CiphertextMessage(Message):
@@ -246,35 +246,44 @@ class CiphertextMessage(Message):
 
 
 #Example test case (PlaintextMessage)
+# plaintext = PlaintextMessage('hello', 2)
+# s = Message('hello!')
+# print(s.apply_shift(2))
+# #print(plaintext.build_shift_dict(2))
+# #print('Expected Output: jgnnq')
+# #print('Actual Output:', plaintext.get_message_text_encrypted())
+
+# # #Example test case (CiphertextMessage)
+# # ciphertext = CiphertextMessage('jgnnq')
+# # print('Expected Output:', (24, 'hello'))
+# # print('Actual Output:', ciphertext.decrypt_message())
+
+# #Example test case (PlaintextMessage), apply_shift
+# plaintext = PlaintextMessage('hello', 2)
+# print('Expected Output: jgnnq')
+# print('Actual Output:', plaintext.get_message_text_encrypted())
+
+# # From edX grader for this problemset:
+# # Exmaple 1, apply_shift (random, but figured it out, it's 11):
+# plaintext = PlaintextMessage('we are taking 6.00.1x', 11)
+# print('Expected Output: hp lcp elvtyr 6.00.1i')
+# print('Actual Output:', plaintext.get_message_text_encrypted())
+
+# # Exmaple 2, apply_shift (random, but figured it out, it's 4):
+# plaintext = PlaintextMessage('th!s is Problem Set 6?', 4)
+# print('Expected Output: xl!w mw Tvsfpiq Wix 6?')
+# print('Actual Output:', plaintext.get_message_text_encrypted())
+
+# # Exmaple 3, apply_shift (random, but figured it out, it's 3):
+# plaintext = PlaintextMessage('TESTING.... so many words we are testing out your code: last one', 13)
+# print('Expected Output: WHVWLQJ.... vr pdqb zrugv zh duh whvwlqj rxw brxu frgh: odvw rqh')
+# print('Actual Output:', plaintext.get_message_text_encrypted())
+
 plaintext = PlaintextMessage('hello', 2)
-s = Message('hello!')
-print(s.apply_shift(2))
-#print(plaintext.build_shift_dict(2))
-#print('Expected Output: jgnnq')
-#print('Actual Output:', plaintext.get_message_text_encrypted())
+print(plaintext.get_shift())
+print(plaintext.get_encrypting_dict())
+plaintext.change_shift(21)
+print(plaintext.get_shift())
+print(plaintext.get_encrypting_dict())
 
-# #Example test case (CiphertextMessage)
-# ciphertext = CiphertextMessage('jgnnq')
-# print('Expected Output:', (24, 'hello'))
-# print('Actual Output:', ciphertext.decrypt_message())
 
-#Example test case (PlaintextMessage), apply_shift
-plaintext = PlaintextMessage('hello', 2)
-print('Expected Output: jgnnq')
-print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# From edX grader for this problemset:
-# Exmaple 1, apply_shift (random, but figured it out, it's 11):
-plaintext = PlaintextMessage('we are taking 6.00.1x', 11)
-print('Expected Output: hp lcp elvtyr 6.00.1i')
-print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# Exmaple 2, apply_shift (random, but figured it out, it's 4):
-plaintext = PlaintextMessage('th!s is Problem Set 6?', 4)
-print('Expected Output: xl!w mw Tvsfpiq Wix 6?')
-print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# Exmaple 3, apply_shift (random, but figured it out, it's 3):
-plaintext = PlaintextMessage('TESTING.... so many words we are testing out your code: last one', 13)
-print('Expected Output: WHVWLQJ.... vr pdqb zrugv zh duh whvwlqj rxw brxu frgh: odvw rqh')
-print('Actual Output:', plaintext.get_message_text_encrypted())
