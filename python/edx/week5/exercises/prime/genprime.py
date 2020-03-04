@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 
-def genPrimes(number):
+def genPrimes():
     ans = []
-    factor = 2
-    #ans.append(factor)  # append the first factor '2'
+    prime = 2
 
-    for i in range(2, number+1):
-        if not ans:
-            ans.append(factor)
-            #next
-
-        elif (i % factor) != 0:
+    while True:
+        x = prime // 2
+        while x > 1:
+            if prime % x == 0:
+                break
+            x -= 1
+            prime += 1
+        else:
             ans.append(i)
-    yield ans
+            yield i
+            prime += 1
 
-g = genPrimes(20)
+
+g = genPrimes()
 pass
 
 
