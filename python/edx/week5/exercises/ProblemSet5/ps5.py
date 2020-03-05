@@ -211,18 +211,9 @@ class PlaintextMessage(Message):
         #pass #delete this line and replace with your code here
         self.shift = shift
         # Since shift is changing, let's also update our dict and apply cipher on our message
-<<<<<<< HEAD
         self.encrypting_dict =  self.build_shift_dict(self.shift)
-<<<<<<< Updated upstream
         self.apply_shift(self.shift)
-=======
-        self.build_shift_dict(self.shift)
-        self.message_text_encrypted
->>>>>>> c407e22... Ok. Now apply_shift function working; which is the function that ciphers
-=======
         self.message_text_encrypted = self.apply_shift(self.shift)
->>>>>>> Stashed changes
-
 
 class CiphertextMessage(Message):
     def __init__(self, text):
