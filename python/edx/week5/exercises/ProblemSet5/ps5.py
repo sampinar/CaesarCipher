@@ -251,7 +251,7 @@ class CiphertextMessage(Message):
         count = 1
 
         while count != 0:
-            for s in range(0, 25):
+            for s in range(0, 26):
                 # if decrypt_msg_tmp not empty then make it empty list (clear for each s)
                 if decrypt_msg_tmp:
                     decrypt_msg_tmp = []
@@ -259,32 +259,40 @@ class CiphertextMessage(Message):
                 decrypted_message = self.apply_shift(26 - s)
                 # now check if each word is a valid word
                 for word in decrypted_message.split():
-                    if ''.join(l.lower() for l in word if l not in string.punctuation) in self.get_valid_words():
+                    if ''.join(l.lower() for l in word if l not in string.punctuation + string.digits) in self.get_valid_words():
                         # append word to 'decrypt_msg_tmp'
                         decrypt_msg_tmp.append(word)
+                        # if 's' value is 26, change it to '0' as a shift of 26 is the same thing as a shift of '0'
+                        if s == 0:
+                            s = 26
                         # update shift_dict dictionary
                         if s not in shift_dict:
-                            shift_dict[s] = [len(decrypt_msg_tmp)]
+                            shift_dict[26-s] = [len(decrypt_msg_tmp)]
                         else:
-                            shift_dict[s][0] += len(decrypt_msg_tmp)
+                            shift_dict[26-s][0] = len(decrypt_msg_tmp)
                         # append another list for to put complete decrypt_msg_tmp
-                        try:
-                            shift_dict[s][1].append(word)
-                        except IndexError:
-                            shift_dict[s].append([])
-                            shift_dict[s][1].append(word)
+                        # try:
+                        #     shift_dict[s][1].append(word)
+                        # except IndexError:
+                        #     shift_dict[s].append([])
+                        #     shift_dict[s][1].append(word)
                         # finally:
                         #     shift_dict[s][1].append(word)
                     else:
                         #shift_dict[s][1].append(word)
                         next
+                try:
+                    shift_dict[26-s].append(decrypted_message)
+                except KeyError:
+                    pass
             count = 0
 
         best = ''.join([str(key) for key in shift_dict.keys() if shift_dict[key] == max(shift_dict.values())])
-        return (best, ' '.join(shift_dict[int(best)][1]))
+        return (best, ''.join(shift_dict[int(best)][1]))
 
 
-p = PlaintextMessage('Message is    Nonsense words: frequency fright ask disturb lose', 2)
+#p = PlaintextMessage('Message    is    Nonsense     ords: frequency fright ask disturb lose', 23)
+p = PlaintextMessage('Message   is  Nonsense    words: funeral sew friendly composition diamond greet sad president ticket even prejudice soap move must wound rub belt so thank vain value clear veil staff damage citizen dress safe spin which level art gun urge comparison', 14)
 print(p.get_message_text_encrypted())
 encrypt = p.get_message_text_encrypted()
 
