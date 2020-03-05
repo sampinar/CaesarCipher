@@ -213,11 +213,15 @@ class PlaintextMessage(Message):
         # Since shift is changing, let's also update our dict and apply cipher on our message
 <<<<<<< HEAD
         self.encrypting_dict =  self.build_shift_dict(self.shift)
+<<<<<<< Updated upstream
         self.apply_shift(self.shift)
 =======
         self.build_shift_dict(self.shift)
         self.message_text_encrypted
 >>>>>>> c407e22... Ok. Now apply_shift function working; which is the function that ciphers
+=======
+        self.message_text_encrypted = self.apply_shift(self.shift)
+>>>>>>> Stashed changes
 
 
 class CiphertextMessage(Message):
@@ -287,11 +291,17 @@ class CiphertextMessage(Message):
 # print('Expected Output: WHVWLQJ.... vr pdqb zrugv zh duh whvwlqj rxw brxu frgh: odvw rqh')
 # print('Actual Output:', plaintext.get_message_text_encrypted())
 
+<<<<<<< Updated upstream
 plaintext = PlaintextMessage('hello', 2)
 <<<<<<< HEAD
+=======
+# plaintext = PlaintextMessage('1.hello', 21)
+plaintext = PlaintextMessage('1.hello!!', 2)
+pass
+>>>>>>> Stashed changes
 print(plaintext.get_shift())
 print(plaintext.get_encrypting_dict())
-plaintext.change_shift(21)
+#plaintext.change_shift(21)
 print(plaintext.get_shift())
 print(plaintext.get_encrypting_dict())
 
