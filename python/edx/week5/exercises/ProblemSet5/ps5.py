@@ -251,7 +251,7 @@ class CiphertextMessage(Message):
         count = 1
 
         while count != 0:
-            for s in range(1, 27):
+            for s in range(0, 25):
                 # if decrypt_msg_tmp not empty then make it empty list (clear for each s)
                 if decrypt_msg_tmp:
                     decrypt_msg_tmp = []
@@ -259,11 +259,14 @@ class CiphertextMessage(Message):
                 decrypted_message = self.apply_shift(26 - s)
                 # now check if each word is a valid word
                 for word in decrypted_message.split():
-                    if ''.join(l for l in word if l not in string.punctuation) in self.get_valid_words():
+                    if ''.join(l.lower() for l in word if l not in string.punctuation) in self.get_valid_words():
                         # append word to 'decrypt_msg_tmp'
                         decrypt_msg_tmp.append(word)
                         # update shift_dict dictionary
-                        shift_dict[s] = [len(decrypt_msg_tmp)]
+                        if s not in shift_dict:
+                            shift_dict[s] = [len(decrypt_msg_tmp)]
+                        else:
+                            shift_dict[s][0] += len(decrypt_msg_tmp)
                         # append another list for to put complete decrypt_msg_tmp
                         try:
                             shift_dict[s][1].append(word)
@@ -278,97 +281,17 @@ class CiphertextMessage(Message):
             count = 0
 
         best = ''.join([str(key) for key in shift_dict.keys() if shift_dict[key] == max(shift_dict.values())])
-        return best
+        return (best, ' '.join(shift_dict[int(best)][1]))
 
 
-#Example test case (PlaintextMessage)
-# plaintext = PlaintextMessage('hello', 2)
-# s = Message('hello!')
-# print(s.apply_shift(2))
-# #print(plaintext.build_shift_dict(2))
-# #print('Expected Output: jgnnq')
-# #print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # #Example test case (CiphertextMessage)
-# # ciphertext = CiphertextMessage('jgnnq')
-# # print('Expected Output:', (24, 'hello'))
-# # print('Actual Output:', ciphertext.decrypt_message())
-
-# #Example test case (PlaintextMessage), apply_shift
-# plaintext = PlaintextMessage('hello', 2)
-# print('Expected Output: jgnnq')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # From edX grader for this problemset:
-# # Exmaple 1, apply_shift (random, but figured it out, it's 11):
-# plaintext = PlaintextMessage('we are taking 6.00.1x', 11)
-# print('Expected Output: hp lcp elvtyr 6.00.1i')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # Exmaple 2, apply_shift (random, but figured it out, it's 4):
-# plaintext = PlaintextMessage('th!s is Problem Set 6?', 4)
-# print('Expected Output: xl!w mw Tvsfpiq Wix 6?')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # Exmaple 3, apply_shift (random, but figured it out, it's 3):
-# plaintext = PlaintextMessage('TESTING.... so many words we are testing out your code: last one', 13)
-# print('Expected Output: WHVWLQJ.... vr pdqb zrugv zh duh whvwlqj rxw brxu frgh: odvw rqh')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# plaintext = PlaintextMessage('hello', 2)
-# print(plaintext.get_shift())
-# print(plaintext.get_encrypting_dict())
-# #plaintext.change_shift(21)
-# print(plaintext.get_shift())
-# print(plaintext.get_encrypting_dict())
-
-
-# s = Message('hello!')
-# print(s.apply_shift(2))
-# #print(plaintext.build_shift_dict(2))
-# #print('Expected Output: jgnnq')
-# #print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # #Example test case (CiphertextMessage)
-# # ciphertext = CiphertextMessage('jgnnq')
-# # print('Expected Output:', (24, 'hello'))
-# # print('Actual Output:', ciphertext.decrypt_message())
-
-# #Example test case (PlaintextMessage), apply_shift
-# plaintext = PlaintextMessage('hello', 2)
-# print('Expected Output: jgnnq')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # From edX grader for this problemset:
-# # Exmaple 1, apply_shift (random, but figured it out, it's 11):
-# plaintext = PlaintextMessage('we are taking 6.00.1x', 11)
-# print('Expected Output: hp lcp elvtyr 6.00.1i')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # Exmaple 2, apply_shift (random, but figured it out, it's 4):
-# plaintext = PlaintextMessage('th!s is Problem Set 6?', 4)
-# print('Expected Output: xl!w mw Tvsfpiq Wix 6?')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # Exmaple 3, apply_shift (random, but figured it out, it's 3):
-# plaintext = PlaintextMessage('TESTING.... so many words we are testing out your code: last one', 13)
-# print('Expected Output: WHVWLQJ.... vr pdqb zrugv zh duh whvwlqj rxw brxu frgh: odvw rqh')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# Second test in edX grader. FAiled:
-# Example 4 shift is 9
-# plaintext = PlaintextMessage('th!s is Problem Set 6?', 9)
-# print('Expected Output: cq!b rb Yaxkunv Bnc 6?')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-# # Example 5 shift is 13
-# plaintext = PlaintextMessage('TESTING.... so many words we are testing out your code: last one', 13)
-# print('Expected Output: GRFGVAT.... fb znal jbeqf jr ner grfgvat bhg lbhe pbqr: ynfg bar')
-# print('Actual Output:', plaintext.get_message_text_encrypted())
-
-p = PlaintextMessage('hello!', 2)
+p = PlaintextMessage('Message is    Nonsense words: frequency fright ask disturb lose', 2)
 print(p.get_message_text_encrypted())
 encrypt = p.get_message_text_encrypted()
+
+
 print(encrypt)
-s = CiphertextMessage(encrypt)
-print(s.decrypt_message())
+sup = CiphertextMessage(encrypt)
+print(sup.decrypt_message())
+print(p.message_text)
+print('check if equal...')
+print(sup.decrypt_message()[1] == p.message_text)
