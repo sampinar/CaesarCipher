@@ -259,7 +259,7 @@ class CiphertextMessage(Message):
                 decrypted_message = self.apply_shift(26 - s)
                 # now check if each word is a valid word
                 for word in decrypted_message.split():
-                    if is_word(load_words(WORDLIST_FILENAME), word):
+                    if ''.join(l for l in word if l not in string.punctuation) in self.get_valid_words():
                         # append word to 'decrypt_msg_tmp'
                         decrypt_msg_tmp.append(word)
                         # update shift_dict dictionary
@@ -366,10 +366,9 @@ class CiphertextMessage(Message):
 # print('Expected Output: GRFGVAT.... fb znal jbeqf jr ner grfgvat bhg lbhe pbqr: ynfg bar')
 # print('Actual Output:', plaintext.get_message_text_encrypted())
 
-p = PlaintextMessage('hello', 2)
+p = PlaintextMessage('hello!', 2)
 print(p.get_message_text_encrypted())
 encrypt = p.get_message_text_encrypted()
-
+print(encrypt)
 s = CiphertextMessage(encrypt)
-s.decrypt_message()
-pass
+print(s.decrypt_message())
