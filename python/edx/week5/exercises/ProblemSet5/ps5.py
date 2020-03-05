@@ -282,14 +282,7 @@ class CiphertextMessage(Message):
 # print('Expected Output: WHVWLQJ.... vr pdqb zrugv zh duh whvwlqj rxw brxu frgh: odvw rqh')
 # print('Actual Output:', plaintext.get_message_text_encrypted())
 
-<<<<<<< Updated upstream
 plaintext = PlaintextMessage('hello', 2)
-<<<<<<< HEAD
-=======
-# plaintext = PlaintextMessage('1.hello', 21)
-plaintext = PlaintextMessage('1.hello!!', 2)
-pass
->>>>>>> Stashed changes
 print(plaintext.get_shift())
 print(plaintext.get_encrypting_dict())
 #plaintext.change_shift(21)
@@ -297,7 +290,6 @@ print(plaintext.get_shift())
 print(plaintext.get_encrypting_dict())
 
 
-=======
 s = Message('hello!')
 print(s.apply_shift(2))
 #print(plaintext.build_shift_dict(2))
@@ -340,4 +332,3 @@ print('Actual Output:', plaintext.get_message_text_encrypted())
 plaintext = PlaintextMessage('TESTING.... so many words we are testing out your code: last one', 13)
 print('Expected Output: GRFGVAT.... fb znal jbeqf jr ner grfgvat bhg lbhe pbqr: ynfg bar')
 print('Actual Output:', plaintext.get_message_text_encrypted())
->>>>>>> c407e22... Ok. Now apply_shift function working; which is the function that ciphers
