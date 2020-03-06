@@ -263,8 +263,8 @@ class CiphertextMessage(Message):
                         # append word to 'decrypt_msg_tmp'
                         decrypt_msg_tmp.append(word)
                         # if 's' value is 26, change it to '0' as a shift of 26 is the same thing as a shift of '0'
-                        #if s == 26:
-                        #    s = 0
+                        if s == 0:
+                            s = 26
                         # update shift_dict dictionary
                         if s not in shift_dict:
                             shift_dict[26-s] = [len(decrypt_msg_tmp)]
@@ -292,7 +292,7 @@ class CiphertextMessage(Message):
 
 
 #p = PlaintextMessage('Message    is    Nonsense     words: frequency fright ask disturb lose', 1)
-p = PlaintextMessage('Message   is  Nonsense    words: funeral sew friendly composition diamond greet sad president ticket even prejudice soap move must wound rub belt so thank vain value clear veil staff damage citizen dress safe spin which level art gun urge comparison', 14)
+p = PlaintextMessage('Message   is  Nonsense    words: funeral sew friendly composition diamond greet sad president ticket even prejudice soap move must wound rub belt so thank vain value clear veil staff damage citizen dress safe spin which level art gun urge comparison', 26)
 #print(p.get_message_text_encrypted())
 encrypt = p.get_message_text_encrypted()
 
