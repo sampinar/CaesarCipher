@@ -263,13 +263,13 @@ class CiphertextMessage(Message):
                         # append word to 'decrypt_msg_tmp'
                         decrypt_msg_tmp.append(word)
                         # if 's' value is 26, change it to '0' as a shift of 26 is the same thing as a shift of '0'
-                        if s == 0:
-                            s = 26
+                        #if s == 26:
+                        #    s = 0
                         # update shift_dict dictionary
                         if s not in shift_dict:
                             shift_dict[26-s] = [len(decrypt_msg_tmp)]
                         else:
-                            shift_dict[26-s][0] = len(decrypt_msg_tmp)
+                            shift_dict[s][0] = len(decrypt_msg_tmp)
                         # append another list for to put complete decrypt_msg_tmp
                         # try:
                         #     shift_dict[s][1].append(word)
@@ -291,15 +291,28 @@ class CiphertextMessage(Message):
         return (best, ''.join(shift_dict[int(best)][1]))
 
 
-#p = PlaintextMessage('Message    is    Nonsense     ords: frequency fright ask disturb lose', 23)
+#p = PlaintextMessage('Message    is    Nonsense     words: frequency fright ask disturb lose', 1)
 p = PlaintextMessage('Message   is  Nonsense    words: funeral sew friendly composition diamond greet sad president ticket even prejudice soap move must wound rub belt so thank vain value clear veil staff damage citizen dress safe spin which level art gun urge comparison', 14)
-print(p.get_message_text_encrypted())
+#print(p.get_message_text_encrypted())
 encrypt = p.get_message_text_encrypted()
 
 
-print(encrypt)
+# print(encrypt)
 sup = CiphertextMessage(encrypt)
 print(sup.decrypt_message())
-print(p.message_text)
-print('check if equal...')
-print(sup.decrypt_message()[1] == p.message_text)
+# print(p.message_text)
+# print('check if equal...')
+# print(sup.decrypt_message()[1] == p.message_text)
+
+# Problem 4 - Decrypt a Story. Basically, this problem wants us to create an CiphertextMessage object which 
+# opens the 'story.txt' file and use decrypt_message() to decrypt it. we need to create a 'decrypt_story()' function.
+
+def decrypt_story():
+    text = get_story_string()
+    o = CiphertextMessage(text)
+    return o.decrypt_message()
+#story = CiphertextMessage(open('story.txt', 'r').readline())
+#story.decrypt_message()
+
+print('problem 4...')
+print(decrypt_story())
